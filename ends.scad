@@ -4,19 +4,21 @@ include<parameters.scad>;
 
 screw_hole_diameter = 3.25;
 
+overlap = .5;
+
 module mount_end() {
     difference() {
         //baseplate
-        translate([-outer_width/2, 0, 0])
-        cube([outer_width, outer_width, wall_thickness]);
+        translate([-outer_width/2, -overlap, 0])
+        cube([outer_width, outer_width+overlap, wall_thickness]);
 
         // inner screw hole
         translate([0, outer_width/4, -.1])
-        cylinder(r=screw_hole_diameter, h=wall_thickness+.2);
+        cylinder(d=screw_hole_diameter, h=wall_thickness+.2);
 
         // outer screw hole
         translate([0, outer_width/4*3, -.1])
-        cylinder(r=screw_hole_diameter, h=wall_thickness+.2);
+        cylinder(d=screw_hole_diameter, h=wall_thickness+.2);
     }
 
     //vertical walls
@@ -29,7 +31,9 @@ module mount_end() {
         polygon([
             [0, 0],
             [wall_thickness*2, outer_width],
-            [wall_thickness*2, 0]
+            [wall_thickness*2, 0],
+            [wall_thickness*2, -overlap],
+            [0, -overlap]
         ]);
         // slope cut
         translate([-.1, 0, outer_height])

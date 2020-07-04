@@ -56,8 +56,9 @@ module link_back() {
         difference() {
             cylinder(d=key_diameter-tolerance, h=key_depth+.1-tolerance);
 
-            translate([-2, -5, 3])
-            rotate([0, 30, 0])
+            translate([key_diameter/2, -key_diameter/2-1, 0])
+            rotate([0, 270-key_slope_bottom, 0])
+            translate([0, 0,-.9])
             cube([10,10,1]);
         }
     }

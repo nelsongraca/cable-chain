@@ -14,6 +14,8 @@ key_slope_bottom = 45;
 clip_thickness = 2;
 clip_curve_thickness = 1.75;
 
+end_screw_hole_diameter = 3.25;
+
 _trim = 1;
 
 $fa = 3;

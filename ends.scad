@@ -2,8 +2,6 @@ use<link.scad>;
 
 include<parameters.scad>;
 
-screw_hole_diameter = 3.25;
-
 overlap = .5;
 
 module mount_end() {
@@ -14,11 +12,11 @@ module mount_end() {
 
         // inner screw hole
         translate([0, outer_width/4, -.1])
-        cylinder(d=screw_hole_diameter, h=wall_thickness+.2);
+        cylinder(d=end_screw_hole_diameter, h=wall_thickness+.2);
 
         // outer screw hole
         translate([0, outer_width/4*3, -.1])
-        cylinder(d=screw_hole_diameter, h=wall_thickness+.2);
+        cylinder(d=end_screw_hole_diameter, h=wall_thickness+.2);
     }
 
     //vertical walls

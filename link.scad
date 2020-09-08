@@ -156,7 +156,7 @@ module full_link() {
 }
 
 //translate([0, -mid_depth/2, outer_height-clip_thickness])
-translate([outer_width, 0, 0])
+//translate([outer_width, 0, 0])
 clip();
 
-full_link();
+//full_link();

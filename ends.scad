@@ -40,7 +40,7 @@ module mount_end() {
     }
 }
 
-// male end
+// end
 translate([-outer_width, 0, 0])
 union() {
     translate([0, -mid_depth, 0])
@@ -49,7 +49,7 @@ union() {
     mount_end();
 }
 
-// female end
+// start
 translate([outer_width, 0, 0])
 union() {
     translate([0, mid_depth, 0])

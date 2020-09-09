@@ -68,16 +68,19 @@ module link_mid() {
     translate([0, -mid_depth, 0])
     difference() {
         union() {
+            // walls
             translate([0, 0, outer_height/2])
             for(n=[0, 1])
             mirror([n, 0, 0])
             translate([-outer_width/2, 0, -outer_height/2])
             cube([wall_thickness * 2, mid_depth, outer_height]);
 
+            // base
             translate([-outer_width/2, 0, 0])
             cube([outer_width, mid_depth, wall_thickness]);
         }
 
+        // notch cutout
         translate([-outer_width/2-.5, mid_depth/2, outer_height])
         rotate([0, 90, 0])
         linear_extrude(height=outer_width+1)

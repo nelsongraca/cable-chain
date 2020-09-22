@@ -1,4 +1,4 @@
-include<parameters.scad>
+include<../parameters.scad>
 
 thickness = 5;
 

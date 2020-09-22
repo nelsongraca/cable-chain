@@ -122,7 +122,7 @@ module clip() {
     union() {
         for(r=[0, 180])
         rotate([0, 0, r]) {
-            translate([outer_width/2-wall_thickness*2.5, 0, clip_thickness])
+            translate([outer_width/2-wall_thickness*2.5-tolerance, 0, clip_thickness])
             rotate([0, 90, 0])
             linear_extrude(height=wall_thickness+.25)
             notch_profile(false);
@@ -159,7 +159,7 @@ module full_link() {
 }
 
 //translate([0, -mid_depth/2, outer_height-clip_thickness])
-//translate([outer_width, 0, 0])
+translate([outer_width, 0, 0])
 clip();
 
-//full_link();
+full_link();

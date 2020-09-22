@@ -1,5 +1,5 @@
-include<parameters.scad>
-use<link.scad>
+include<../parameters.scad>
+use<../link.scad>
 
 pipe_size = 23.5+tolerance*2;
 sleeve_thickness = 2;

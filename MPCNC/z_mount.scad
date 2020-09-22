@@ -1,16 +1,16 @@
-include<parameters.scad>
-use<link.scad>
+include<../parameters.scad>
+use<../link.scad>
 
-wall_size = 2.5;
+wall_size = 3;
 
 hole_size = 4.5;
-hole_inset = 1.5;
+hole_inset = 2;
 
 base_clamp_gap = 7.25;
 base_clamp_height = 21 + hole_size + hole_inset * 2;
 base_depth = 19;
 
-arm_height = 15 + 26 + 20 + outer_height;
+arm_height = 15 + 26 + 30 + outer_height;
 arm_depth = outer_height-_trim;
 
 union() {
@@ -62,6 +62,14 @@ union() {
     translate([0, base_clamp_height + wall_size + arm_height, 0])
     cube([
         wall_size + outer_width,
+        wall_size * 2,
+        arm_depth
+    ]);
+
+    //lower support
+    translate([0, base_clamp_height + arm_height - outer_height - 3, 0])
+    cube([
+        outer_width-4,
         wall_size,
         arm_depth
     ]);

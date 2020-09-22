@@ -1,5 +1,7 @@
 # Easy Parametric Cable Chain
 
+[Check this out on Thingiverse!](https://www.thingiverse.com/thing:4603506)
+
 A fully parametric cable chain made in [OpenSCAD](http://www.openscad.org/).
 
 I needed some cable chains for my MPCNC, and while there are already a number of good cable chains on Thingiverse, I wanted to remix some of my favorite features into a single easily modifiable and remixable model. So, here it is.
@@ -12,7 +14,7 @@ Features include:
 * a long link for stretches that don't move
 * a sprue
 
-I made this for a MPCNC (Burly version) build, so I included various mounts and brackets I made for it, in case anyone finds them useful.
+I made this for a [MPCNC (Burly version)](https://docs.v1engineering.com/mpcnc/burly/) build, so I included various mounts and brackets I made for it, in case anyone finds them useful.
 
 ## SCAD Files
 

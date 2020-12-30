@@ -1,15 +1,16 @@
 include<parameters.scad>;
 
 module notch_profile(with_tolerance=false) {
+    w = 2;
     polygon([
         [clip_thickness,
-         -1.25 - (with_tolerance ? tolerance/2 : 0)],
+         -(w+clip_thickness/2) - (with_tolerance ? tolerance/2 : 0)],
         [(with_tolerance ? -.1 : 0),
-         -.75 - (with_tolerance ? tolerance/2 : 0)],
+         -w - (with_tolerance ? tolerance/2 : 0)],
         [(with_tolerance ? -.1 : 0),
-         .75 + (with_tolerance ? tolerance/2 : 0)],
+         w + (with_tolerance ? tolerance/2 : 0)],
         [clip_thickness,
-         1.25 + (with_tolerance ? tolerance/2 : 0)]
+         (w+clip_thickness/2) + (with_tolerance ? tolerance/2 : 0)]
     ]);
 }
 
@@ -18,7 +19,7 @@ module link_back() {
     translate([0, 0, outer_height/2])
     for(n=[0, 1])
     mirror([n, 0, 0])
-    translate([-outer_width/2, 0, 0])
+    translate([-outer_width/2+tolerance/2 + wall_thickness, 0, 0])
     union() {
         translate([0, _trim, 0])
         union() {
@@ -52,14 +53,13 @@ module link_back() {
         // key
         translate([0, -outer_height/2-tolerance, 0])
         rotate([0, 90, 0])
-        translate([0, 0, wall_thickness-.1])
+        translate([0, 0, -wall_thickness-.1+tolerance])
         difference() {
             cylinder(d=key_diameter-tolerance, h=key_depth+.1-tolerance);
 
-            translate([key_diameter/2, -key_diameter/2-1, 0])
-            rotate([0, 270-key_slope_bottom, 0])
-            translate([0, 0,-.9])
-            cube([10,10,1]);
+            translate([key_diameter/2, -key_diameter, key_depth])
+            rotate([0, 180-key_slope_bottom, 0])
+            cube([10,10,10]);
         }
     }
 }
@@ -93,12 +93,12 @@ module link_front() {
     translate([0, 0, outer_height/2])
     for(n=[0, 1])
     mirror([n, 0, 0])
-    translate([-outer_width/2 + wall_thickness, 0, 0])
+    translate([-outer_width/2 , 0, 0])
     difference() {
         union() {
             translate([0, -_trim, 0])
             difference() {
-                translate([tolerance/2, outer_height/2, 0])
+                translate([0, outer_height/2, 0])
                 rotate([0, 90, 0])
                 cylinder(d=outer_height, h=wall_thickness-tolerance/2);
 
@@ -106,7 +106,7 @@ module link_front() {
                 cube([wall_thickness-tolerance+.2, outer_height/2, outer_height]);
             }
 
-            translate([tolerance/2, 0, -outer_height/2])
+            translate([0, 0, -outer_height/2])
             cube([wall_thickness-tolerance/2, outer_height/2-_trim, outer_height]);
         }
 
@@ -117,37 +117,45 @@ module link_front() {
         cylinder(d=key_diameter+tolerance, h=key_depth+.1+tolerance);
     }
 }
-
+/**/
 module clip() {
     union() {
-        for(r=[0, 180])
-        rotate([0, 0, r]) {
-            translate([outer_width/2-wall_thickness*2.5-tolerance, 0, clip_thickness])
-            rotate([0, 90, 0])
-            linear_extrude(height=wall_thickness+.25)
+        rotate([0, 90, 0]) {
+            translate([-clip_thickness, 0,0])
+            linear_extrude(height=outer_width)
             notch_profile(false);
-
-            translate([outer_width/2-wall_thickness*2-clip_curve_thickness, -1.5, 0])
-            cube([clip_curve_thickness, 3, clip_thickness]);
-
-            translate([-clip_curve_thickness/2, -clip_curve_thickness, 0])
-            cube([clip_curve_thickness, clip_curve_thickness*2, clip_thickness]);
-
-            cyl_radius=(outer_width-wall_thickness*4+clip_curve_thickness)/4;
-
-            translate([cyl_radius-clip_curve_thickness/2, 1, 0])
-            difference() {
-                cylinder(r=cyl_radius, h=clip_thickness);
-
-                translate([0, 0, -.1])
-                cylinder(r=cyl_radius-clip_curve_thickness, h=clip_thickness+.2);
-
-                translate([-outer_width/2, -outer_width/2, -.1])
-                cube([outer_width, outer_width/2, clip_thickness + .2]);
-            }
         }
+        translate([wall_thickness*2+tolerance, -mid_depth/2, 0])
+        cube([outer_width-wall_thickness*4-tolerance*2, mid_depth, clip_thickness]);
     }
 }
+
+/*module clip() {
+    union() {
+        for(n=[0, 1])
+        mirror([n, 0, 0]) {
+            cube([(outer_width-wall_thickness)/2, mid_depth, clip_thickness]);
+        
+            
+            translate([(outer_width-wall_thickness)/2, mid_depth/3, 0]) {
+            difference() {
+                cube([wall_thickness*2, mid_depth/3, clip_thickness*3]);                
+                translate([0, 0, clip_thickness])
+                cube([wall_thickness, mid_depth/3, clip_thickness]);
+                rotate([0,-45,0])
+                translate([wall_thickness, 0, clip_thickness])
+                cube([wall_thickness*3, mid_depth/3, clip_thickness*2]);
+                
+            }
+        }
+            //translate([(outer_width+wall_thickness)/2, mid_depth/3, -clip_thickness*2])
+            //cube([wall_thickness, mid_depth/3, clip_thickness*3]);
+
+        }
+
+    }
+}
+*/
 
 module full_link() {
     union() {
@@ -158,7 +166,7 @@ module full_link() {
     }
 }
 
-//translate([0, -mid_depth/2, outer_height-clip_thickness])
+//translate([-outer_width/2, -mid_depth/2, outer_height-clip_thickness])
 translate([outer_width, 0, 0])
 clip();
 

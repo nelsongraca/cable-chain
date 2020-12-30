@@ -36,8 +36,9 @@ module mount_end() {
         // slope cut
         translate([-.1, 0, outer_height])
         rotate([-35, 0, 0])
-        cube([wall_thickness*2+.2, outer_width*2, outer_height]);
+        cube([wall_thickness*2+.2, outer_width*2, outer_height*2]);
     }
+
 }
 
 // end
